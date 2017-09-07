@@ -18,7 +18,12 @@
   int fadeAmount3 = fadeAmount2; //Zählergröße LED3
   int ledpuls = 1; //Ausganszustand Status_LED
   int central_off = 1; //Zentral-Aus-EIN ==> ON
-  int fader = 1; //FADER == ON
+  int fader = 1; //FADER INIT After powercycle
+  int led1_state = 0; //LED1 INIT after Powercycle with on/off Button
+  int led2_state = 0; //LED2 INIT after Powercycle with on/off Button
+  int led3_state = 0; //LED3 INIT after Powercycle with on/off Button
+  int led4_state = 1; //LED4 INIT after Powercycle with on/off Button
+
 
 
 
@@ -50,14 +55,30 @@ void loop() {
 
   // put your main code here, to run repeatedly:
 
-  Serial.println("BUTTON1: " + String(digitalRead(ONE)) + ", BUTTON2: " + String(digitalRead(TWO)) + ", BUTTON3: " + String(digitalRead(THREE)) + ", BUTTON4: " + String(digitalRead(FOUR)) + ", FADER-BUTTON: " + String(digitalRead(FADER)) + ", FADER-STATE: " + String(fader) + " BUTTON5: " + String(digitalRead(FIVE)) + " ON/OFF: " + String(central_off));
+  Serial.println("BUTTON1: " + String(digitalRead(ONE)) + ", LED1_ON: " + String(led1_state) + ", BUTTON2: " + String(digitalRead(TWO)) + + ", LED2_ON: " + String(led2_state) + ", BUTTON3: " + String(digitalRead(THREE)) +  ", LED3_ON: " + String(led3_state)  + ", BUTTON4: " + String(digitalRead(FOUR)) + ", LED4_ON: " + String(led4_state) + ", FADER-BUTTON: " + String(digitalRead(FADER)) + ", FADER-STATE: " + String(fader) + ", BUTTON5: " + String(digitalRead(FIVE)) + ", ON/OFF: " + String(central_off));
     //Umschaltung der Status_LED mit Boolscher Algebra jeden Programm durchlauf
 
     if (digitalRead(FIVE) == LOW && central_off == 0){
       central_off = 1;
+      if (led1_state == 1){
+      digitalWrite(LED_1, HIGH);
+      }
+      if (led2_state == 1){
+      digitalWrite(LED_2, HIGH);
+      }
+      if (led3_state == 1){
+      digitalWrite(LED_3, HIGH);
+      }
+      if (led4_state == 1){
+      digitalWrite(LED_4, HIGH);
+      }
     }
     else if (digitalRead(FIVE) == LOW && central_off == 1) {
       central_off = 0;
+      digitalWrite(LED_1, LOW);
+      digitalWrite(LED_2, LOW);
+      digitalWrite(LED_3, LOW);
+      digitalWrite(LED_4, LOW);
     }
     else {
     }
@@ -97,15 +118,17 @@ void loop() {
     digitalWrite(LED_3, LOW);
     fader = 0;
     digitalWrite(LED_1, HIGH);
+    led1_state = 1;
      }
      else {
       digitalWrite(LED_1, HIGH);
+    led1_state = 1;
      }
   
   }
   else if (digitalRead(ONE) == LOW && digitalRead(LED_1) == HIGH) {
     digitalWrite(LED_1, LOW);
- 
+    led1_state = 0;
     }
   else {
  
@@ -118,15 +141,16 @@ void loop() {
     digitalWrite(LED_3, LOW);
     fader = 0;
     digitalWrite(LED_2, HIGH);
+    led2_state = 1;
      }
      else{
       digitalWrite(LED_2, HIGH);
+    led2_state = 1;
      }
-  
-  }
+    }
   else if (digitalRead(TWO) == LOW && digitalRead(LED_2) == HIGH) {
     digitalWrite(LED_2, LOW);
- 
+    led2_state = 0; 
     }
   else {
  
@@ -139,14 +163,17 @@ void loop() {
     digitalWrite(LED_3, LOW);
     fader = 0;
     digitalWrite(LED_3, HIGH);
+    led3_state = 1;
      }
      else{
       digitalWrite(LED_3, HIGH);
+    led3_state = 1;
      }
   
   }
   else if (digitalRead(THREE) == LOW && digitalRead(LED_3) == HIGH) {
     digitalWrite(LED_3, LOW);
+    led3_state = 0;
  
     }
   else {
@@ -155,9 +182,11 @@ void loop() {
   
   if (digitalRead(FOUR) == LOW && digitalRead(LED_4) == LOW  ){
     digitalWrite(LED_4, HIGH);
+    led4_state = 1;
   }
   else if (digitalRead(FOUR) == LOW && digitalRead(LED_4) == HIGH) {
     digitalWrite(LED_4, LOW);
+    led4_state = 0;
     }
   else {
   }
