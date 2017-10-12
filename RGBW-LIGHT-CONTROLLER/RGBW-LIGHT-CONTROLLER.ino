@@ -4,12 +4,12 @@
   #define LED_3 11 //3. LED_ausgang (z.B. Blau einer RGB LED)
   #define LED_4 6 //4. LED_ausgang (z.B. zusätzliche weisse LED
   #define LED_puls 13 //Onboard Status_LED des Gscheiduino boards
-  #define FADER 2
-  #define ONE 3
-  #define TWO 4
-  #define THREE 5
-  #define FOUR 7
-  #define FIVE 8
+  #define FADER 2 // Fader Button
+  #define ONE 3 // One Button
+  #define TWO 4 // Two Button
+  #define THREE 5 // Three Button
+  #define FOUR 7 // Four Button
+  #define FIVE 8 // Five Button
   int brightness1 = 0; //Starthelligkeit LED1
   int brightness2 = 255; //Starthelligkeit LED2
   int brightness3 = 125; //Starthelligkeit LED3
